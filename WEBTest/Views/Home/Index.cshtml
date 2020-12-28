@@ -1,0 +1,99 @@
+﻿@model AutoRepairShop.Logic
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h4 class="display-3">Автомастерская</h4>
+    <h3>Товары: <span id="count">@Model.Count</span></h3>
+    <table id="products" class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Название услуги</th>
+                <th scope="col">Количество деталей</th>
+                <th scope="col">Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var service in Model.Services)
+            {
+                <tr>
+                    <td>@service.name</td>
+                    <td>@service.count</td>
+                    <td>@service.price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="container bg-light">
+        <div class="row m-3">
+            <div class="col-sm">
+                <h4>Операции</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm m-1">
+                <h5>Добавить новую услугу</h5>
+                <form asp-controller="Home" asp-action="AddService" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="addName">Имя</label>
+                        <input name="addName" class="form-control" id="addName" placeholder="Введите название услуги">
+                    </div>
+                    <div class="form-group row">
+                        <label for="addCount">Количество</label>
+                        <input name="addCount" class="form-control" id="addCount" placeholder="Запас деталей для услуги">
+                    </div>
+                    <div class="form-group row">
+                        <label for="addPrice">Цена</label>
+                        <input name="addPrice" class="form-control" id="addPrice" placeholder="Введите цену услуги">
+                    </div>
+                    <button id="btnAddIfNotExists" type="submit" class="btn btn-primary float-right">Добавить</button>
+                </form>
+            </div>
+            <div class="col-sm m-1">
+                <h5>Удалить услугу</h5>
+                <form asp-controller="Home" asp-action="RemoveService" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="removeName">Название услуги</label>
+                        <input name="removeName" class="form-control" id="removeName" placeholder="Введите название услуги">
+                    </div>
+                    <button id="btnRemoveAllNames" type="submit" class="btn btn-primary float-right">Удалить услугу</button>
+                </form>
+            </div>
+            <div class="col-sm m-1">
+                <h5>Поставка запчастей</h5>
+                <form asp-controller="Home" asp-action="ImportDetails" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="importName">Название услуги</label>
+                        <input name="importName" class="form-control" id="importName" placeholder="Введите название услуги">
+                    </div>
+                    <div class="form-group row">
+                        <label for="importCount">Количество запчастей</label>
+                        <input name="importCount" class="form-control" id="importCount" placeholder="Введите количество запчастей">
+                    </div>
+                    <button id="btnImport" type="submit" class="btn btn-primary float-right">Зафиксировать поставку</button>
+                </form>
+            </div>
+            <div class="col-sm m-1">
+                <h5>Предоставить услугу</h5>
+                <form asp-controller="Home" asp-action="BuyService" method="post" autocomplete="off">
+                    <div class="form-group row">
+                        <label for="buyName">Название услуги</label>
+                        <input name="buyName" class="form-control" id="buyName" placeholder="Введите название услуги">
+                    </div>
+                    <div class="form-group row">
+                        <label for="buyCount">Количество используемых запчастей</label>
+                        <input name="buyCount" class="form-control" id="buyCount" placeholder="Введите количество запчастей">
+                    </div>
+                    <button id="btnBuy" type="submit" class="btn btn-primary float-right">Купить</button>
+                </form>
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col-sm">
+                <label for="errorField">Консоль</label>
+                <input name="errorField" readonly class="form-control" id="errorField" placeholder=@Model.errorText>
+            </div>
+        </div>
+    </div>
+</div>
