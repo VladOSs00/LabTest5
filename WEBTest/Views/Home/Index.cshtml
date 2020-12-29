@@ -97,3 +97,29 @@
         </div>
     </div>
 </div>
+<script>
+
+    let input = document.getElementsByName("addName")[0]
+
+    input.addEventListener('input', () => {
+        input.value = input.value.replace(/[^A-Za-zА-Яа-яЁё]/, '');
+    });
+
+    let input2 = document.getElementsByName("buyName")[0]
+
+    input2.addEventListener('input', () => {
+        input2.value = input2.value.replace(/[^A-Za-zА-Яа-яЁё]/, '');
+    });
+
+    let input3 = document.getElementsByName("removeName")[0]
+
+    input3.addEventListener('input', () => {
+        input3.value = input3.value.replace(/[^A-Za-zА-Яа-яЁё]/, '');
+    });
+
+    let input4 = document.getElementsByName("importName")[0]
+
+    input4.addEventListener('input', () => {
+        input4.value = input4.value.replace(/[^A-Za-zА-Яа-яЁё]/, '');
+    });
+</script>
