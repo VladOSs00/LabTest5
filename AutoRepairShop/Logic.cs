@@ -21,22 +21,37 @@ namespace AutoRepairShop
         {
             if (!(service.name == null))
             {
-                if (!_services.Exists(a => a.name == service.name))
+                if (service.name.Length > 3)
                 {
-                    if (uint.TryParse(service.count, out uint n) && uint.TryParse(service.price, out uint nn) && !(service.count == null) && !(service.price == null))
+                    if (!_services.Exists(a => a.name == service.name))
                     {
-                        _services.Add(service);
-                        errorText = "";
+                        if (int.TryParse(service.count, out int n) && int.TryParse(service.price, out int nn) && !(service.count == null) && !(service.price == null))
+                        {
+                            if (Convert.ToInt32(service.count) > 0 && Convert.ToInt32(service.price) > 0)
+                            {
+                                _services.Add(service);
+                                errorText = "";
+                            }
+                            else
+                            {
+                                errorText = "Count_and_Price_MustBe_MoreThanZero";
+                            }
+                        }
+                        else
+                        {
+                            errorText = "Count_or_Price_is_NotNumber";
+                        }
                     }
                     else
                     {
-                        errorText = "Count_and_Price_is_Negative_or_NotNumber";
+                        errorText = "Service_already_exist";
                     }
                 }
                 else
                 {
-                    errorText = "Service_already_exist";
+                    errorText = "ServiceName_IsShorter_Than_3_Symbols";
                 }
+
             }
             else
             {
@@ -49,24 +64,37 @@ namespace AutoRepairShop
         {
             if (!(name == null))
             {
-                int id = _services.FindIndex(a => a.name == name);
-                if (id >= 0)
+                if (name.Length > 3)
                 {
-                    if (uint.TryParse(count, out uint nn) && !(count == null))
+                    int id = _services.FindIndex(a => a.name == name);
+                    if (id >= 0)
                     {
-                        _services[id].count = (Convert.ToInt32(_services[id].count) + Convert.ToInt32(count)).ToString();
-                        errorText = "";
-                    }
+                        if (int.TryParse(count, out int nn) && !(count == null))
+                        {
+                            if (Convert.ToInt32(count) > 0)
+                            {
+                                _services[id].count = (Convert.ToInt32(_services[id].count) + Convert.ToInt32(count)).ToString();
+                                errorText = "";
+                            }
+                            else
+                            {
+                                errorText = "Count_MustBe_MoreThanZero";
+                            }
+                        }
+                        else
+                        {
+                            errorText = "Count_is_Null_or_NotNumber";
+                        }
 
+                    }
                     else
                     {
-                        errorText = "Wrong_count";
+                        errorText = "Service_not_found";
                     }
-
                 }
                 else
                 {
-                    errorText = "Service_not_found";
+                    errorText = "ServiceName_IsShorter_Than_3_Symbols";
                 }
             }
             else
@@ -83,21 +111,28 @@ namespace AutoRepairShop
                 int id = _services.FindIndex(a => a.name == name);
                 if (id >= 0)
                 {
-                    if (uint.TryParse(count, out uint nn) && !(count == null))
+                    if (int.TryParse(count, out int nn) && !(count == null))
                     {
-                        if (Convert.ToInt32(_services[id].count) >= Convert.ToInt32(count))
+                        if (Convert.ToInt32(count) > 0)
                         {
-                            _services[id].count = (Convert.ToInt32(_services[id].count) - Convert.ToInt32(count)).ToString();
-                            errorText = "";
+                            if (Convert.ToInt32(_services[id].count) >= Convert.ToInt32(count))
+                            {
+                                _services[id].count = (Convert.ToInt32(_services[id].count) - Convert.ToInt32(count)).ToString();
+                                errorText = "";
+                            }
+                            else
+                            {
+                                errorText = "Service_NeedMore_Details_Than_Exist";
+                            }
                         }
                         else
                         {
-                            errorText = "Service_NeedMore_Details_Than_Exist";
+                            errorText = "Count_MustBe_MoreThanZero";
                         }
                     }
                     else
                     {
-                        errorText = "Wrong_count";
+                        errorText = "Count_is_Null_or_NotNumber";
                     }
                 }
                 else
@@ -125,7 +160,6 @@ namespace AutoRepairShop
         {
             if (!(name == null))
             {
-
                 var count = _services.FindAll(a => a.name == name).Count;
                 if (count > 0)
                 {
@@ -146,5 +180,5 @@ namespace AutoRepairShop
             }
         }
     }
-}
 
+}
