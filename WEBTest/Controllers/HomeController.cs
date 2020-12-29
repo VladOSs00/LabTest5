@@ -68,13 +68,6 @@ namespace WEBTest.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult BuyUsluga()
-        {
-
-          //  _logic.GetLogic().BuyUsluga();            
-            return RedirectToAction("Index");
-        }
-
        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
